@@ -80,7 +80,7 @@ def generateRake():
                 rakeIndex[rakeIdx]["cap"] = capAmnt
 
                 # count the total sum of them (RAKE + cos + cap)
-                total = rakeMark + (cosMark*6) + (capAmnt*3)
+                total = rakeMark + (cosMark*1) + (capAmnt*8)
                 rakeIndex[rakeIdx]["total"] = total
             
             # rank based on the total marks
