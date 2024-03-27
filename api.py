@@ -93,7 +93,7 @@ def generateRake():
             numberstotake = 20 if totalIndex>20 else totalIndex
             topN = convert_to_list[:numberstotake]
             topNindexes = dict(topN)
-            print(f"Page {j}\n")
+            print(f"Page {j}")
             print(topNindexes)
 
             for topNindex in topNindexes:
@@ -108,7 +108,6 @@ def generateRake():
 
                 else: # kalau sdh ada mi di GENERATED
                     idx = next((key for key,value in GENERATED.items() if key.lower() == topNindex.lower()), None)
-                    print("-----problems idx = ", idx)
                     # cek! kalau lebih kapital ki, gnti dgn yg ini
                     if (MyRAKE.sum_ascii(topNindex) < MyRAKE.sum_ascii(idx)):
                         GENERATED[idx].append(j)
