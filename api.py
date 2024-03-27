@@ -18,6 +18,9 @@ CORS(app)
 UPLOAD_FOLDER = "./userinput"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def capitalize(index):
+    return index[0].upper() + index[1:]
+
 @app.route('/generate-rake', methods=['POST'])
 def generateRake():
     filePDF = request.files["filePdf"]
@@ -87,7 +90,7 @@ def generateRake():
             sortedRakeIndex = dict(sorted(rakeIndex.items(), key=lambda item: item[1]["total"], reverse=True))
             convert_to_list = list(sortedRakeIndex.items())
             totalIndex = len(sortedRakeIndex)
-            numberstotake = 20 if totalIndex>20 else int(0.5*totalIndex)
+            numberstotake = 20 if totalIndex>20 else totalIndex
             topN = convert_to_list[:numberstotake]
             topNindexes = dict(topN)
             print(f"Page {j}\n")
@@ -115,7 +118,7 @@ def generateRake():
 
     TEXT = ""
     for element in SortedGENERATED:
-        TEXT += f"{element.capitalize()}, "
+        TEXT += f"{capitalize(element)}, "
         for lengthh, page in enumerate(SortedGENERATED[element]):
             TEXT += f"{page}"
             if lengthh != len(SortedGENERATED[element])-1:
