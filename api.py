@@ -11,6 +11,8 @@ import MyRAKE
 import WordEmbeddings as CountWordEmb
 import math
 from docxtpl import DocxTemplate
+import spacy
+spacy_model = spacy.load("en_core_web_md")
 
 app = Flask(__name__)
 CORS(app)
@@ -98,13 +100,11 @@ def generateRake():
 
             for topNindex in topNindexes:
                 if topNindex.lower() not in [ndpl.lower() for ndpl in GENERATED]:
-                    idx__ = next((key for key,value in GENERATED.items() if MyRAKE.splitEachWord(topNindex) == MyRAKE.splitEachWord(key)), None)
+                    idx__ = next((key for key,value in GENERATED.items() if [spacy_model(t)[0].lemma_ for t in MyRAKE.splitEachWord(topNindex)] == [spacy_model(t)[0].lemma_ for t in MyRAKE.splitEachWord(key)]), None)
                     if idx__ is None:
                         GENERATED[topNindex] = [j]
                     else: #klo sdh ada di GENERATED
-                        if "-" in topNindex: 
-                            GENERATED[idx__].append(j) 
-                        # klo "-" in GENERATED[idx__] brti cckmi, jgnmi gntiki
+                        GENERATED[idx__].append(j) 
 
                 else: # kalau sdh ada mi di GENERATED
                     idx = next((key for key,value in GENERATED.items() if key.lower() == topNindex.lower()), None)
